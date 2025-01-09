@@ -1,31 +1,110 @@
-# Desafio Back-end
+# Desafio Back-end - Agenda de Contatos
 
-## Introdução
+## Sobre o Projeto
+Este projeto é uma API REST desenvolvida para gerenciar uma agenda de contatos. A API permite a criação, edição, consulta e remoção de contatos, com validações robustas de dados e integração com serviços externos para notificação e autenticação. A solução foi desenvolvida em **Java 17** utilizando o **Spring Boot 3.1.9** e banco de dados **PostgreSQL**.
 
-Este projeto usa Spring Boot 3.1.9 e Java 17. Se optar por utilizar este projeto como base, certifique-se de ter a versão 17 do Java SDK instalada.
+## Funcionalidades Principais
+- Cadastro, consulta, edição e remoção de contatos.
+- Validação de dados, incluindo CPF e CEP.
+- Persistência dos dados em banco relacional SQL (PostgreSQL).
+- Tratamento de exceções para dados inválidos e erros de banco de dados.
+- Envio de notificações por e-mail (simulado via integração com um endpoint externo).
+- Suporte à expansão para consultas e funcionalidades mais complexas.
 
-O objetivo deste desafio é avaliar sua abordagem na criação de uma API REST e sua comunicação com uma base de dados relacional (SQL). Recomenda-se o PostgreSQL, mas qualquer solução SQL é válida.
+## Tecnologias Utilizadas
+- **Java 17**: Linguagem de programação principal do projeto.
+- **Spring Boot 3.1.9**: Framework para criação de aplicações web e APIs.
+- **Spring Data JPA**: Para acesso e manipulação de dados no banco relacional.
+- **Spring Validation**: Para validações robustas nos dados de entrada.
+- **Spring Boot Starter Mail**: Para envio de notificações (simulação via API externa).
+- **PostgreSQL**: Banco de dados relacional para persistência dos contatos.
+- **Maven**: Gerenciador de dependências e build do projeto.
+- **RestTemplate**: Para consumo de APIs externas.
 
-Embora esta estrutura utilize Spring Boot e Java, sinta-se à vontade para escolher a tecnologia de back-end mais confortável para você. É crucial atender aos requisitos e evitar o uso de bibliotecas como Lombok, possibilitando a observação e avaliação de todo o código.
+## Estrutura do Projeto
+O projeto está organizado em camadas seguindo boas práticas de design:
 
-Caso decida utilizar este projeto como base, realize um *fork* dele.
+- **Controller**: Gerencia as requisições HTTP e retorna as respostas.
+- **Service**: Contém a lógica de negócio.
+- **Repository**: Responsável por interagir com o banco de dados.
+- **Model**: Define as entidades do sistema.
+- **DTO**: Define os objetos de transferência de dados entre camadas.
+- **Exception**: Tratamento global de erros.
 
-## Descrição do Desafio
+## Configuração e Execução do Projeto
 
-Desenvolva uma API REST para atender às necessidades de back-end de uma agenda de contatos, com os seguintes requisitos essenciais:
+### Requisitos
+- **Java 17**
+- **Maven**
+- **PostgreSQL**
 
-* Criação, edição, consulta e remoção de registros de contatos.
-* Os contatos devem representar pessoas físicas.
-* Validação de CPFs ou CEPs inválidos.
-* Armazenamento dos dados em uma base de dados SQL.
-* Tratamento de exceções em caso de erro na base de dados ou recebimento de dados inválidos.
-* Envio de e-mail para cada registro realizado como notificação, utilizando o endpoint https://run.mocky.io/v3/c9ec2ca3-a7f5-41d0-8550-b859508f4948 (requisição GET).
+### Passos para Configuração
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   ```
 
-Requisitos opcionais:
+2. Configure o banco de dados PostgreSQL:
+    - Crie um banco de dados chamado `agenda`.
+    - Atualize as credenciais no arquivo `application.properties`:
+      ```properties
+      spring.datasource.url=jdbc:postgresql://localhost:5432/agenda
+      spring.datasource.username=seu-usuario
+      spring.datasource.password=sua-senha
+      spring.jpa.hibernate.ddl-auto=update
+      spring.jpa.show-sql=true
+      ```
 
-* Um contato pode, também, ser uma pessoa jurídica (com as devidas validações).
-* Associação de todos os contatos a um (ou mais) registro(s) de usuário(s), deixando a relação exata a seu critério.
-* Implementação de uma base SQL com georreferenciamento para armazenar coordenadas em um tipo dedicado de coluna.
-* Consultas mais complexas, como filtrar todos os registros de pessoa física cujo CPF começa com os caracteres "018".
-* Envio de mensagens de resposta traduzidas para pelo menos mais um idioma.
-* Restrição de operações da API apenas para usuários autenticados, utilizando o endpoint https://run.mocky.io/v3/970f7229-1a5e-4905-bac8-81aaa9d51e17 (GET) para autenticação/obtenção dos dados do usuário atual, se necessário.
+3. Instale as dependências do projeto:
+   ```bash
+   mvn clean install
+   ```
+
+4. Execute o projeto:
+   ```bash
+   mvn spring-boot:run
+   ```
+
+A aplicação estará disponível em `http://localhost:8080`.
+
+### Endpoints da API
+- **POST /api/contatos**: Cria um novo contato.
+- **GET /api/contatos**: Lista todos os contatos.
+- **DELETE /api/contatos/{id}**: Remove um contato pelo ID.
+
+## Testes
+Para testar a API, você pode usar ferramentas como **Postman**, **Insomnia** ou qualquer cliente HTTP de sua preferência.
+
+### Exemplo de Requisição POST
+**URL:** `http://localhost:8080/api/contatos`
+**Body (JSON):**
+```json
+{
+  "nome": "João Silva",
+  "cpf": "12345678901",
+  "cep": "01001000",
+  "tipoContato": "Físico"
+}
+```
+
+**Resposta (201 Created):**
+```json
+{
+  "id": 1,
+  "nome": "João Silva",
+  "cpf": "12345678901",
+  "cep": "01001000",
+  "tipoContato": "Físico"
+}
+```
+
+## Considerações Finais
+Este projeto foi criado como parte de um desafio para avaliar habilidades de desenvolvimento back-end.
+
+### Possíveis Melhorias Futuras
+- Implementar autenticação de usuários.
+- Suporte a contatos do tipo Pessoa Jurídica.
+- Consultas mais complexas, como filtrar contatos por prefixo de CPF.
+- Internacionalização (i18n) para respostas em múltiplos idiomas.
+- Integração com mais serviços externos.
+
