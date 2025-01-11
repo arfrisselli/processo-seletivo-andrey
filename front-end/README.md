@@ -1,58 +1,104 @@
-# Desafio Técnico Front-end
+# Front-end - Agenda de Contatos
 
-## Introdução
+## Sobre o Projeto
+Este projeto é o front-end de uma aplicação para gerenciar uma agenda de contatos. Ele foi desenvolvido utilizando o framework **Angular** e segue boas práticas de arquitetura e organização de código. A interface permite:
 
-O objetivo deste desafio é avaliar sua abordagem para resolver um problema utilizando recursos comuns dos sistemas da Maptriz. Fornecemos um esqueleto de projeto em Angular como ponto de partida, mas você pode optar por outras tecnologias de front-end, se preferir.
+- Listar contatos cadastrados.
+- Adicionar novos contatos.
+- Editar contatos existentes.
+- Excluir contatos.
 
-Ao concluir, hospede o projeto no seu GitHub (evite referências diretas à Maptriz). Realizaremos um *Code Review* e uma conversa técnica posteriormente. Se optar por usar a base em Angular, faça um *fork* do projeto no seu GitHub.
+O projeto também utiliza **NGXS** para gerenciamento de estado, permitindo uma estrutura limpa e escalável.
 
-Envie o link do seu GitHub para processoseletivo@maptriz.com.br.
+## Tecnologias Utilizadas
+- **Angular 15+**: Framework para desenvolvimento de aplicações front-end baseadas em TypeScript.
+- **NGXS**: Biblioteca para gerenciamento de estado, inspirada pelo Redux, mas simplificada para Angular.
+- **TypeScript**: Linguagem principal do projeto, adicionando tipagem estática ao JavaScript.
+- **RxJS**: Biblioteca para manipulação de streams reativas.
+- **HTML5 e SCSS**: Para criar e estilizar a interface do usuário.
+- **Angular Material (opcional)**: Para melhorar a experiência visual com componentes prontos.
 
-## Descrição do Desafio
-
-Desenvolva uma agenda com gerenciamento de contatos, com as seguintes funcionalidades:
-
-* Cadastro de pessoas físicas como contatos.
-* Consulta de contatos.
-* Edição de contatos.
-* Exclusão de contatos.
-* Envio de notificações via e-mail para o usuário após alterações na agenda.
-
-Funcionalidades opcionais:
-
-* Cadastro de pessoas jurídicas como contatos.
-* Armazenamento de coordenadas de moradia (pessoa física) ou escritório (pessoa jurídica).
-* Adição de recursos de acessibilidade (foco em deficiências visuais).
-* Tradução da interface para pelo menos um idioma adicional.
-
-Itens não avaliados:
-
-* Design da interface.
-* Autenticação do usuário (apontando para https://run.mocky.io/v3/970f7229-1a5e-4905-bac8-81aaa9d51e17).
-* Nota: Para a funcionalidade de notificação por e-mail, utilize https://run.mocky.io/v3/c9ec2ca3-a7f5-41d0-8550-b859508f4948.
-
-A aplicação deve ser executável localmente e ter tratamento de erros adequado, incluindo feedback ao usuário e evitando falhas graves. Atente-se às comunicações com APIs e formulários.
-
-## Técnicas Desejadas
-
-Se utilizar Angular, use as seguintes técnicas:
-
-* Angular Reactive Forms (https://angular.io/guide/reactive-forms) em todos os formulários.
-* NGXS (https://www.ngxs.io/) para gerenciamento de estados.
-
-Utilize técnicas análogas se escolher outra tecnologia de front-end.
-
-## Como Executar o Projeto Angular
-
-Para rodar o projeto Angular (caso opte por esta tecnologia), instale o NodeJS (recomendamos versão 14, por exemplo, 14.15). Execute:
+## Estrutura do Projeto
+O projeto está organizado da seguinte maneira:
 
 ```
-npm install -g angular-cli
+src/app/
+├── components/        # Componentes da interface
+│   ├── contact-form/  # Formulário para criar ou editar contatos
+│   ├── contact-list/  # Lista de contatos
+├── models/            # Modelos de dados utilizados
+│   ├── contact.model.ts
+├── services/          # Serviços para comunicação com a API
+│   ├── contact.service.ts
+├── state/             # Gerenciamento de estado com NGXS
+│   ├── contact.state.ts
+│   ├── contact.actions.ts
+├── app-routing.module.ts
+├── app.module.ts
 ```
 
-Depois, na pasta raiz do projeto:
+## Funcionalidades
 
-```
-npm install
+### Funcionalidades Principais
+- **Listagem de Contatos**: Exibe todos os contatos cadastrados.
+- **Cadastro de Contatos**: Permite criar um novo contato, com validação de dados no formulário.
+- **Edição de Contatos**: Edita os detalhes de um contato existente.
+- **Exclusão de Contatos**: Remove um contato do sistema.
+
+### Funcionalidades Extras
+- **Validações no Formulário**: Campos obrigatórios e validação de formatos (e.g., CPF, e-mail).
+- **Feedback ao Usuário**: Mensagens de confirmação e alerta ao executar operações.
+- **Gerenciamento de Estado com NGXS**: Garante performance e consistência nas operações.
+
+## Configuração e Execução do Projeto
+
+### Requisitos
+Certifique-se de ter instalado em sua máquina:
+- **Node.js** (versão 14 ou superior)
+- **Angular CLI**
+
+### Instalação
+1. Clone o repositório do projeto:
+   ```bash
+   git clone <url-do-repositorio>
+   ```
+
+2. Acesse o diretório do projeto:
+   ```bash
+   cd agenda-contatos
+   ```
+
+3. Instale as dependências do projeto:
+   ```bash
+   npm install
+   ```
+
+### Execução
+Para iniciar o servidor de desenvolvimento, execute:
+```bash
 ng serve
 ```
+A aplicação estará disponível em [http://localhost:4200](http://localhost:4200).
+
+### Build
+Para gerar uma versão de produção, utilize:
+```bash
+ng build --prod
+```
+Os arquivos gerados estarão na pasta `dist/`.
+
+## Endpoints Consumidos
+A aplicação consome os seguintes endpoints:
+- **Listar Contatos**: `GET /api/contatos`
+- **Adicionar Contato**: `POST /api/contatos`
+- **Atualizar Contato**: `PUT /api/contatos/{id}`
+- **Deletar Contato**: `DELETE /api/contatos/{id}`
+
+## Melhorias Futuras
+- Implementar paginação e filtros na listagem de contatos.
+- Melhorar o design com bibliotecas como Angular Material ou Bootstrap.
+- Adicionar suporte à internacionalização (i18n).
+- Implementar autenticação e autorização para acesso às rotas.
+
+## Considerações Finais
+Este projeto foi desenvolvido como parte de um desafio técnico.
