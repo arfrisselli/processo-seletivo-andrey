@@ -1,0 +1,42 @@
+<div class="form-container">
+  <h2>{{ contactForm.value.id ? 'Editar Contato' : 'Novo Contato' }}</h2>
+
+  <form [formGroup]="contactForm" (ngSubmit)="submit()">
+    <div>
+      <label for="name">Nome:</label>
+      <input id="name" formControlName="name" type="text" placeholder="Digite o nome" />
+      <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+        <small>O nome é obrigatório.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="cpf">CPF:</label>
+      <input id="cpf" formControlName="cpf" type="text" placeholder="Digite o CPF" />
+      <div *ngIf="contactForm.get('cpf')?.invalid && contactForm.get('cpf')?.touched">
+        <small>O CPF é obrigatório.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="email">E-mail:</label>
+      <input id="email" formControlName="email" type="email" placeholder="Digite o e-mail" />
+      <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+        <small>O e-mail é inválido ou obrigatório.</small>
+      </div>
+    </div>
+
+    <div>
+      <label for="type">Tipo:</label>
+      <select id="type" formControlName="type">
+        <option value="Física">Física</option>
+        <option value="Jurídica">Jurídica</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="contactForm.invalid">Salvar</button>
+      <button type="button" (click)="contactForm.reset()">Limpar</button>
+    </div>
+  </form>
+</div>

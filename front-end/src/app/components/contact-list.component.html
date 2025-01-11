@@ -1,0 +1,31 @@
+<div class="list-container">
+  <h2>Lista de Contatos</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>E-mail</th>
+        <th>Tipo</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contact of (contacts$ | async)">
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.cpf }}</td>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.type }}</td>
+        <td>
+          <button (click)="editContact(contact)">Editar</button>
+          <button (click)="deleteContact(contact.id)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!(contacts$ | async)?.length" class="no-contacts">
+    <p>Nenhum contato encontrado.</p>
+  </div>
+</div>
